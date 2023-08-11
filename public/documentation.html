@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
+    <div> 
     <h1> Technical Requirements </h1>
     ● The API must be a Node.js and Express application. <br>
     ● The API must use REST architecture, with URL endpoints corresponding to the data operations listed above <br>
@@ -21,6 +23,170 @@
     ● The API must include data validation logic.<br>
     ● The API must meet data security regulations.<br>
     ● The API source code must be deployed to a publicly accessible platform like GitHub.<br>
-    ● The API must be deployed to Heroku <br>  
+    ● The API must be deployed to Heroku <br> 
+    </div>
+    <div style="margin-top: 20px;">
+        <table class="table table-striped table-bordered">
+            <caption>Endpoint documentation</caption>
+            <thead class="thead-dark"> 
+                <tr>
+                    <th scope="col"> Business logic </th>
+                    <th scope="col"> URL </th>
+                    <th scope="col"> HTTP Method </th>
+                    <th scope="col"> Request body data format </th>
+                    <th scope="col"> Response body data format </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Return a list of ALL movies to the user</td>
+                    <td>/movies</td>
+                    <td> GET </td>
+                    <td>None</td>
+                    <td> A JSON object holding data about all the movies</td>
+                </tr>
+                <tr>
+                    <td>Return data (description, genre, director, image URL, whether it’s featured or not) 
+                         about a single movie by title to the user </td>
+                    <td>/movies/[title]/description</td>
+                    <td>GET</td>
+                    <td>none</td>
+                    <td> A JSON object holding data about a single movie, containing a title 
+                    description, genre, director, featured property, etc. Example:
+                    <p style="color: blue;">
+                        {<br>
+                            title: 'The shape of water',<br>
+                            director: {<br>
+                                &nbsp&nbsp&nbsp name:'Guillermo del Toro',<br>
+                                &nbsp&nbsp&nbsp bio: 'Author from south america',<br>
+                                &nbsp&nbsp&nbsp birth year: 1960 ,<br>
+                                &nbsp&nbsp&nbsp death year: <br>
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp }<br>
+                            genre: 'Drama',<br>
+                            Decription: Surnatural fiction and romance story, <br>
+                            featured: yes <br>
+                        }
+                    </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Return data about a director (bio, birth year, death year) by name </td>
+                    <td>/movies/[name]/director</td>
+                    <td> GET </td>
+                    <td>none</td>
+                    <td> A JSON object holding data about a director <br>
+                    description, genre, director, featured property, etc. Example:
+                    <p style="color: blue;">
+                        {<br>
+                            name:'Guillermo del Toro',<br>
+                            bio: 'Author from south america',<br>
+                            birth year: 1960 ,<br>
+                            death year: <br>
+                         }<br>
+                    </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Allow new users to register </td>
+                    <td>/users </td>
+                    <td> POST</td>
+                    <td> A JSON object holding data about the new user: 
+                        <p style="color: red;">
+                            {<br>
+                                name:'John Doe',<br>
+                                username: 'jdoe',<br>
+                                birth year: 1950 ,<br>
+                                email: jdoe@mail.com<br>
+                             }<br>
+                        </p>
+                    </td>
+                    <td> A JSON object holding data about the registred user, including ID. Example 
+                        <p style="color: blue;">
+                            {<br>
+                                id:15,<br>
+                                name:'John Doe',<br>
+                                username: 'jdoe',<br>
+                                birth year: 1950 ,<br>
+                                email: jdoe@mail.com<br>
+                             }<br>
+                        </p>
+                        </td>
+    
+                </tr>
+                <tr>
+                    <td>Allow users to update their user info (username) </td>
+                    <td> /users/[user-id]/[username] </td>
+                    <td> PUT </td>
+                    <td> None</td>
+                    <td> A text message indicating wether the username was succesfully updated</td>
+                </tr>
+                <tr>
+                    <td>Allow users to add a movie to their list of favorites 
+                        (showing only a text that a movie has been added—more on this later) </td>
+                    <td>/movies/[title]/[user-id]/favorites</td>
+                    <td> ADD </td>
+                    <td> A JSON object holding data about a single movie, containing a title
+                        description, genre, director, featured property, etc. Example:
+                        <p style="color: red;">
+                            {<br>
+                                title: 'The shape of water',<br>
+                                director: {<br>
+                                    &nbsp&nbsp&nbsp name:'Guillermo del Toro',<br>
+                                    &nbsp&nbsp&nbsp bio: 'Author from south america',<br>
+                                    &nbsp&nbsp&nbsp birth year: 1960 ,<br>
+                                    &nbsp&nbsp&nbsp death year: <br>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp }<br>
+                                genre: 'Drama',<br>
+                                Decription: Surnatural fiction and romance story, <br>
+                                featured: yes <br>
+                            }
+                        </p>
+                    </td>
+                    <td> 
+
+                         A JSON object holding data about a single movie, containing a title 
+                            description, genre, director, featured property, including an ID in the favorite list etc. Example:
+                            <p style="color: blue;">
+                                {<br>
+                                    favlistId: 1, <br>
+                                    title: 'The shape of water',<br>
+                                    director: {<br>
+                                        &nbsp&nbsp&nbsp name:'Guillermo del Toro',<br>
+                                        &nbsp&nbsp&nbsp bio: 'Author from south america',<br>
+                                        &nbsp&nbsp&nbsp birth year: 1960 ,<br>
+                                        &nbsp&nbsp&nbsp death year: <br>
+                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp }<br>
+                                    genre: 'Drama',<br>
+                                    Decription: Surnatural fiction and romance story, <br>
+                                    featured: yes <br>
+                                }
+                            </p>
+                            
+                    </td>
+                </tr>
+                <tr>
+                    <td>Allow users to remove a movie from their list of favorites 
+                        (showing only a text that a movie has been removed—more on this later) </td>
+                    <td>/movies/[title]/[user-id]/favorites</td>
+                    <td> DELETE</td>
+                    <td> None </td>
+                    <td> A text message indicating the movie has been succesfully removed from favorites </td>
+                </tr>
+                <tr>
+                    <td>Allow existing users to deregister<br>
+                         (showing only a text that a user email has been removed—more on this later). </td>
+                    <td> /users/[ID]</td>
+                    <td>DELETE</td>
+                    <td>None </td>
+                    <td> A text message indicating wether the user has been removed</td>
+
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>   
 </body>
 </html>
