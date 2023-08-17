@@ -48,7 +48,7 @@
                 <tr>
                     <td>Return data (description, genre, director, image URL, whether it’s featured or not) 
                          about a single movie by title to the user </td>
-                    <td>/movies/[title]/description</td>
+                    <td>/movies/[Title]</td>
                     <td>GET</td>
                     <td>none</td>
                     <td> A JSON object holding data about a single movie, containing a title 
@@ -59,29 +59,46 @@
                             director: {<br>
                                 &nbsp&nbsp&nbsp name:'Guillermo del Toro',<br>
                                 &nbsp&nbsp&nbsp bio: 'Author from south america',<br>
-                                &nbsp&nbsp&nbsp birth year: 1960 ,<br>
-                                &nbsp&nbsp&nbsp death year: <br>
+                                &nbsp&nbsp&nbsp birth : 1960 ,<br>
+                                &nbsp&nbsp&nbsp death : 1989<br>
                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp }<br>
-                            genre: 'Drama',<br>
+                            genre: {<br>
+                                &nbsp&nbsp&nbspName: 'Drama'<br>
+                                &nbsp&nbsp&nbsp Description: 'Drame genre description'} <br>
                             Decription: Surnatural fiction and romance story, <br>
-                            featured: yes <br>
+                            featured: true <br>
                         }
                     </p>
                     </td>
                 </tr>
                 <tr>
-                    <td>Return data about a director (bio, birth year, death year) by name </td>
-                    <td>/movies/[name]/director</td>
+                    <td>Return data about a genre (description) by name/title (e.g., “Thriller”) </td>
+                    <td>/movies/[GenreName]/genre</td>
+                    <td> GET </td>
+                    <td>none</td>
+                    <td> A JSON object holding data about a genre  Example:<br>
+                        <p style="color: blue;">
+                        {<br>
+                                Name: 'Drama'<br>
+                                Description: 'Drame genre description' <br>
+                         }<br>
+                        </p>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>Return data about a director (bio, birth , death ) by name </td>
+                    <td>/movies/[DirectorName]/director</td>
                     <td> GET </td>
                     <td>none</td>
                     <td> A JSON object holding data about a director <br>
                     description, genre, director, featured property, etc. Example:
                     <p style="color: blue;">
                         {<br>
-                            name:'Guillermo del Toro',<br>
-                            bio: 'Author from south america',<br>
-                            birth year: 1960 ,<br>
-                            death year: <br>
+                            Name:'Guillermo del Toro',<br>
+                            Bio: 'Author from south america',<br>
+                            Birth : 1960 ,<br>
+                            Death: <br>
                          }<br>
                     </p>
                     </td>
@@ -93,10 +110,10 @@
                     <td> A JSON object holding data about the new user: 
                         <p style="color: red;">
                             {<br>
-                                name:'John Doe',<br>
-                                username: 'jdoe',<br>
-                                birth year: 1950 ,<br>
-                                email: jdoe@mail.com<br>
+                                Username:'John Doe',<br>
+                                Password: 'TestPassword',<br>
+                                email: jdoe@mail.com,<br>
+                                Birthday: 1950 <br>
                              }<br>
                         </p>
                     </td>
@@ -104,10 +121,10 @@
                         <p style="color: blue;">
                             {<br>
                                 id:15,<br>
-                                name:'John Doe',<br>
-                                username: 'jdoe',<br>
-                                birth year: 1950 ,<br>
-                                email: jdoe@mail.com<br>
+                                Username:'John Doe',<br>
+                                Password: 'TestPassword',<br>
+                                Email: jdoe@mail.com<br>
+                                Birth: 1950 ,<br>
                              }<br>
                         </p>
                         </td>
@@ -115,72 +132,81 @@
                 </tr>
                 <tr>
                     <td>Allow users to update their user info (username) </td>
-                    <td> /users/[user-id]/[username] </td>
+                    <td> /users/[Username] </td>
                     <td> PUT </td>
-                    <td> None</td>
-                    <td> A text message indicating wether the username was succesfully updated</td>
+                    <td> A JSON object holding data about the files to update: 
+                        <p style="color: red;">
+                            {<br>
+                                Username:'John Doe',<br>
+                                Password: 'TestPassword',<br>
+                                email: jdoe@mail.com,<br>
+                                Birthday: 1950 <br>
+                             }<br>
+                        </p> 
+
+
+                    </td>
+                    <td> A JSON object holding data about the registred user, including ID. Example 
+                        <p style="color: blue;">
+                            {<br>
+                                id:15,<br>
+                                Username:'John ',<br>
+                                Password: 'TestPasswordupdated',<br>
+                                Email: jdoe@mailupdated.com<br>
+                                Birth: 1955 ,<br>
+                                FavoriteMovies:[] <br>
+                             }<br>
+                        </p>
+                    </td>
                 </tr>
                 <tr>
                     <td>Allow users to add a movie to their list of favorites 
                         (showing only a text that a movie has been added—more on this later) </td>
-                    <td>/movies/[title]/[user-id]/favorites</td>
-                    <td> ADD </td>
-                    <td> A JSON object holding data about a single movie, containing a title
-                        description, genre, director, featured property, etc. Example:
-                        <p style="color: red;">
+                    <td>/users/[Unsername]/movies/[MovieID]</td>
+                    <td> POST </td>
+                    <td> None </td>
+                    <td> A JSON object holding data about the registred user, including newMvieID. Example: 
+                        <p style="color: blue;">
                             {<br>
-                                title: 'The shape of water',<br>
-                                director: {<br>
-                                    &nbsp&nbsp&nbsp name:'Guillermo del Toro',<br>
-                                    &nbsp&nbsp&nbsp bio: 'Author from south america',<br>
-                                    &nbsp&nbsp&nbsp birth year: 1960 ,<br>
-                                    &nbsp&nbsp&nbsp death year: <br>
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp }<br>
-                                genre: 'Drama',<br>
-                                Decription: Surnatural fiction and romance story, <br>
-                                featured: yes <br>
-                            }
+                                id:15,<br>
+                                Username:'John ',<br>
+                                Password: 'TestPasswordupdated',<br>
+                                Email: jdoe@mailupdated.com<br>
+                                Birth: 1955 ,<br>
+                                FavoriteMovies:[MovieID] <br>
+                             }<br>
                         </p>
                     </td>
-                    <td> 
-
-                         A JSON object holding data about a single movie, containing a title 
-                            description, genre, director, featured property, including an ID in the favorite list etc. Example:
-                            <p style="color: blue;">
-                                {<br>
-                                    favlistId: 1, <br>
-                                    title: 'The shape of water',<br>
-                                    director: {<br>
-                                        &nbsp&nbsp&nbsp name:'Guillermo del Toro',<br>
-                                        &nbsp&nbsp&nbsp bio: 'Author from south america',<br>
-                                        &nbsp&nbsp&nbsp birth year: 1960 ,<br>
-                                        &nbsp&nbsp&nbsp death year: <br>
-                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp }<br>
-                                    genre: 'Drama',<br>
-                                    Decription: Surnatural fiction and romance story, <br>
-                                    featured: yes <br>
-                                }
-                            </p>
-                            
-                    </td>
+                    
                 </tr>
                 <tr>
-                    <td>Allow users to remove a movie from their list of favorites 
-                        (showing only a text that a movie has been removed—more on this later) </td>
-                    <td>/movies/[title]/[user-id]/favorites</td>
-                    <td> DELETE</td>
+                    <td>Allow users to remove a movie to their list of favorites 
+                        (showing only a text that a movie has been added—more on this later) </td>
+                    <td>/users/[Unsername]/movies/[MovieID]</td>
+                    <td> DELETE </td>
                     <td> None </td>
-                    <td> A text message indicating the movie has been succesfully removed from favorites </td>
-                </tr>
-                <tr>
-                    <td>Allow existing users to deregister<br>
-                         (showing only a text that a user email has been removed—more on this later). </td>
-                    <td> /users/[ID]</td>
-                    <td>DELETE</td>
-                    <td>None </td>
-                    <td> A text message indicating wether the user has been removed</td>
+                    <td> A JSON object holding data about the registred user, without MovieID in FavoriteMovies. Example: 
+                        <p style="color: blue;">
+                            {<br>
+                                id:15,<br>
+                                Username:'John ',<br>
+                                Password: 'TestPasswordupdated',<br>
+                                Email: jdoe@mailupdated.com<br>
+                                Birth: 1955 ,<br>
+                                FavoriteMovies:[] <br>
+                             }<br>
+                        </p>
+                    </td>
 
                 </tr>
+                <tr>
+                    <td>Allow new users to deregister</td>
+                    <td>/users/[Username]</td>
+                    <td> DELETE </td>
+                    <td>None</td>
+                    <td> A Confirmation message taht the user was deleted</td>
+                </tr>
+
             </tbody>
             
         </table>
