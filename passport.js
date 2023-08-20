@@ -23,6 +23,10 @@ new LocalStrategy(
                     message: 'Incorrect username or password'
                 });
             }
+            if (!user.validatePassword(password)){
+
+                console.log('Incorrect password');
+            }
             console.log('finished');
             return callback(null, user);
         })
@@ -30,15 +34,17 @@ new LocalStrategy(
 )
 );
 
-passport.use(new JWTStrategy({
-    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'your_jwt_secret'
-  }, async (jwtPayload, callback) => {
-    return await Users.findById(jwtPayload._id)
+passport.use(
+    new JWTStrategy(
+        {
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey: 'your_jwt_secret'
+         }, async (jwtPayload, callback) => {
+        return await Users.findById(jwtPayload._id)
       .then((user) => {
         return callback(null, user);
-      })
+                    })
       .catch((error) => {
         return callback(error)
-      });
+                        });
   }));
