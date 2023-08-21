@@ -1,6 +1,10 @@
 {
   "name": "movie_api",
   "version": "1.0.0",
+  "engines": {
+    "node": "18.17.1",
+    "npm": "9.8.1"
+  },
   "description": "movie_api",
   "main": "index.js",
   "scripts": {
