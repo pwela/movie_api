@@ -13,8 +13,14 @@ const express = require('express'),
     path = require('path'),
     port = process.env.PORT || 8080;
 
-// mongoose.connect('mongodb://localhost:27017/myPrimeDB', {useNewUrlParser: true, useUnifiedTopology: true});
+
+// Connect to remote Database
 mongoose.connect(process.env.CONNECTION_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+
+// Connect to local database. Use one of the options
+//mongoose.connect('mongodb://localhost:27017/myPrimeDB', {useNewUrlParser: true, useUnifiedTopology: true});
+//mongoose.connect('mongodb://127.0.0.1:27017/myPrimeDB', {useNewUrlParser: true, useUnifiedTopology: true});
+
 // create a write stream (in append mode)
 // a ‘log.txt’ file is created in root directory
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
@@ -337,6 +343,13 @@ app.use((err, req, res, next) => {
   });
 
 // Listen for requests
+
+// listen online server
 app.listen(port, '0.0.0.0', () => {
     console.log('I\'m listening on port ' + port);
 });
+
+// Listen local port
+/*app.listen(8080, () => {
+    console.log('Your app is listening on port 8080');
+  }); */
