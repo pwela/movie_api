@@ -34,6 +34,7 @@ let alloweddOrigins = [
   "http://localhost:8080",
   "http://testsite.com",
   "http://localhost:1234",
+  "https://en.m.wikipedia.org",
 ]; // allowed domains
 
 app.use(
