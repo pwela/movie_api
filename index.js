@@ -30,7 +30,11 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
 });
 //CORS integration, should always be before let auth = require('./auth')(app); and all route middleware
 const cors = require("cors");
-let alloweddOrigins = ["http://localhost:8080", "http://testsite.com"]; // allowed domains
+let alloweddOrigins = [
+  "http://localhost:8080",
+  "http://testsite.com",
+  "http://localhost:1234",
+]; // allowed domains
 
 app.use(
   cors({
@@ -39,7 +43,7 @@ app.use(
       if (alloweddOrigins.indexOf(origin) === -1) {
         // a specified origin isn't found
         let message =
-          "The CORS policy for this pplication does'nt allow acess from origin " +
+          "The CORS policy for this pplication doesn't allow acess from origin " +
           origin;
         return callback(new Error(message), false);
       }
