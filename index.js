@@ -21,7 +21,10 @@ mongoose.connect(process.env.CONNECTION_URI, {
 
 // Connect to local database. Use one of the options
 //mongoose.connect('mongodb://localhost:27017/myPrimeDB', {useNewUrlParser: true, useUnifiedTopology: true});
-//mongoose.connect('mongodb://127.0.0.1:27017/myPrimeDB', {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect("mongodb://127.0.0.1:27017/myPrimeDB", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 
 // create a write stream (in append mode)
 // a ‘log.txt’ file is created in root directory
@@ -34,7 +37,9 @@ let alloweddOrigins = [
   "http://localhost:8080",
   "http://testsite.com",
   "http://localhost:1234",
-  "https://en.m.wikipedia.org",
+  //"http://127.0.0.1:8080/login",
+  //"http://127.0.0.1:1234",
+  // "https://en.m.wikipedia.org",
 ]; // allowed domains
 
 app.use(
@@ -71,17 +76,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // GET requests of movies
-//app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
-app.get("/movies", async (req, res) => {
-  await Movies.find()
-    .then((movies) => {
-      res.status(201).json(movies);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error " + err);
-    });
-});
+app.get(
+  "/movies",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    //app.get("/movies", async (req, res) => {
+    await Movies.find()
+      .then((movies) => {
+        res.status(201).json(movies);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error " + err);
+      });
+  }
+);
 
 // GET request for root folder
 
@@ -399,6 +408,6 @@ app.listen(port, "0.0.0.0", () => {
 });
 
 // Listen local port
-/*app.listen(8080, () => {
-    console.log('Your app is listening on port 8080');
-  }); */
+// app.listen(8080, () => {
+//   console.log("Your app is listening on port 8080");
+// });
