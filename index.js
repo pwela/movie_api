@@ -14,17 +14,20 @@ const express = require("express"),
   port = process.env.PORT || 8080;
 
 // Connect to remote Database
-mongoose.connect(process.env.CONNECTION_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-// Connect to local database. Use one of the options
-//mongoose.connect('mongodb://localhost:27017/myPrimeDB', {useNewUrlParser: true, useUnifiedTopology: true});
-// mongoose.connect("mongodb://127.0.0.1:27017/myPrimeDB", {
+// mongoose.connect(process.env.CONNECTION_URI, {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
+
+// Connect to local database. Use one of the options
+// mongoose.connect("mongodb://localhost:27017/myPrimeDB", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+mongoose.connect("mongodb://127.0.0.1:27017/myPrimeDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // create a write stream (in append mode)
 // a ‘log.txt’ file is created in root directory
@@ -58,22 +61,23 @@ app.use(
   })
 );
 
-// importation of auth.js file
-let auth = require("./auth")(app);
-const passport = require("passport");
-require("./passport");
-
 // setup the logger with morgan middleware library
 app.use(morgan("combined", { stream: accessLogStream }));
 
 // Express.static method. As documentation.html is in "public" folder, no need to create the corresponding routing syntax
 app.use(express.static("public"));
 
-/*importation of body-parser, replaces  
- app.use(bodyParser.json()); and app.use(bodyParser.urlencoded({ extended: true }));
-see chapter 2.5 and 2.8*/
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+//importation of body-parser, replaces
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+//see chapter 2.5 and 2.8
+//app.use(express.json());
+//app.use(express.urlencoded({ extended: true }));
+
+// importation of auth.js file
+let auth = require("./auth")(app);
+const passport = require("passport");
+require("./passport");
 
 // GET requests of movies
 app.get(
@@ -406,11 +410,11 @@ app.use((err, req, res, next) => {
 // Listen for requests
 
 // listen online server
-app.listen(port, "0.0.0.0", () => {
-  console.log("I'm listening on port " + port);
-});
+// app.listen(port, "0.0.0.0", () => {
+//   console.log("I'm listening on port " + port);
+// });
 
 // Listen local port
-// app.listen(8080, () => {
-//   console.log("Your app is listening on port 8080");
-// });
+app.listen(8080, () => {
+  console.log("Your app is listening on port 8080");
+});
