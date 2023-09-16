@@ -37,6 +37,7 @@ let alloweddOrigins = [
   "http://localhost:8080",
   "http://testsite.com",
   "http://localhost:1234",
+  "https://myprime.netlify.app/",
   //"http://127.0.0.1:8080/login",
   //"http://127.0.0.1:1234",
   // "https://en.m.wikipedia.org",
