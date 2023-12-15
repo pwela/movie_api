@@ -5,7 +5,7 @@ The web application will provide users with access to information about differen
 
 # Key features/ endpoints
 
-See documentation.html web page
+<a href="/out/global.html">JSDoc generated documentation here</a>
 
 # Technical requirements
 
@@ -30,6 +30,7 @@ See documentation.html web page
 6. MongoDB
 7. Mongoose
 8. Postman
+9. JSDoc
 
 # Dependencies
 
