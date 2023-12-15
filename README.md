@@ -5,7 +5,7 @@ The web application will provide users with access to information about differen
 
 # Key features/ endpoints
 
-<a href="/out/global.html">JSDoc generated documentation here</a>
+<a href="/out/global.html" target="_blank">JSDoc generated documentation here</a>
 
 # Technical requirements
 
