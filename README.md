@@ -19,6 +19,7 @@ The web application will provide users with access to information about differen
 - This API includes data validation logic.
 - This API must meet data security regulations.
 - This API is deployed on Heroku.
+- API Documentation generat4ed with JSDOC
 
 # Technologies used
 
