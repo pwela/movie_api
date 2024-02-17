@@ -49,6 +49,8 @@ let alloweddOrigins = [
   "https://pwela.github.io",
   "http://15.157.60.95/",
   "http://15.157.60.95",
+  "http://35.182.26.14",
+  "http://35.182.26.14/",
 ]; // allowed domains
 
 app.use(
