@@ -47,7 +47,8 @@ let alloweddOrigins = [
   "https://myprime.netlify.app",
   "https://pwela.github.io/",
   "https://pwela.github.io",
-  "http://15.157.60.95/login",
+  "http://15.157.60.95/",
+  "http://15.157.60.95",
 ]; // allowed domains
 
 app.use(
