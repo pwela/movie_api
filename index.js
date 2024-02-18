@@ -51,6 +51,8 @@ let alloweddOrigins = [
   "http://15.157.60.95",
   "http://35.182.26.14",
   "http://35.182.26.14/",
+  "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com",
+  "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com/",
 ]; // allowed domains
 
 app.use(
