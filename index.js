@@ -13,18 +13,18 @@ const express = require("express"),
   path = require("path"),
   port = process.env.PORT || 8080;
 
-// Connect to remote mongodb Atlas Database
-// mongoose.connect(process.env.CONNECTION_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-//Connect to EC2 database
-//mongoose.connect('mongodb://99.79.193.39:27017/myPrimeDB', {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.connect("mongodb://99.79.193.39:27017/myPrimeDB", {
+// Connect to remote mongodb Atlas or EC2 Database
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+//Connect to EC2 database
+//mongoose.connect('mongodb://99.79.193.39:27017/myPrimeDB', {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect("mongodb://99.79.193.39:27017/myPrimeDB", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 
 // Connect to local database. Use one of the options
 //mongoose.connect('mongodb://localhost:27017/myPrimeDB', {useNewUrlParser: true, useUnifiedTopology: true});
