@@ -45,26 +45,28 @@ const cors = require("cors");
  *List all the allowed domains
  @var {array}
  */
-let alloweddOrigins = [
-  "http://localhost:8080",
-  "http://testsite.com",
-  "http://localhost:1234",
-  "http://localhost:4200",
-  "https://myprime.netlify.app/",
-  "https://myprime.netlify.app",
-  "https://pwela.github.io/",
-  "https://pwela.github.io",
-  "http://15.157.60.95/",
-  "http://15.157.60.95",
-  "http://35.182.26.14",
-  "http://35.182.26.14/",
-  "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com",
-  "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com/",
-  "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com",
-  "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com/",
-  "http://52.60.65.223",
-  "http://52.60.65.223/",
-]; // allowed domains
+// let alloweddOrigins = [
+//   "http://localhost:8080",
+//   "http://testsite.com",
+//   "http://localhost:1234",
+//   "http://localhost:4200",
+//   "https://myprime.netlify.app/",
+//   "https://myprime.netlify.app",
+//   "https://pwela.github.io/",
+//   "https://pwela.github.io",
+//   "http://15.157.60.95/",
+//   "http://15.157.60.95",
+//   "http://35.182.26.14",
+//   "http://35.182.26.14/",
+//   "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com",
+//   "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com/",
+//   "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com",
+//   "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com/",
+//   "http://52.60.65.223",
+//   "http://52.60.65.223/",
+// ]; // allowed domains
+
+let alloweddOrigins = "*";
 
 app.use(
   cors({
