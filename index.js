@@ -75,7 +75,7 @@ app.use(
       if (alloweddOrigins.indexOf(origin) === -1) {
         // a specified origin isn't found
         let message =
-          "The CORS policy for this pplication doesn't allow acess from origin " +
+          "The CORS policy for this app doesn't allow acess from origin " +
           origin;
         return callback(new Error(message), false);
       }
@@ -532,17 +532,17 @@ app.use((err, req, res, next) => {
 
 // Listen for requests
 
-// listen online server
-// app.listen(port, "0.0.0.0", () => {
-//   console.log("I'm listening on port " + port);
-// });
+//listen online server
+app.listen(port, "0.0.0.0", () => {
+  console.log("I'm listening on port " + port);
+});
 
 // listen to server in EC2
-app.listen(3000, "localhost", () => {
-  console.log(
-    "I'm listening on port 3000 for EC2, please change the port number in the code if you are using heroku"
-  );
-});
+// app.listen(3000, "localhost", () => {
+//   console.log(
+//     "I'm listening on port 3000 for EC2, please change the port number in the code if you are using heroku"
+//   );
+// });
 // Listen local port
 // app.listen(8080, () => {
 //   console.log("Your app is listening on port 8080");
