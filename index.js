@@ -66,7 +66,7 @@ const cors = require("cors");
 //   "http://52.60.65.223/",
 // ]; // allowed domains
 
-let alloweddOrigins = "*";
+let alloweddOrigins = ["*"];
 
 app.use(
   cors({
