@@ -62,7 +62,7 @@ let alloweddOrigins = [
   "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com/",
   "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com",
   "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com/",
-  "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com/",
+  "http://myflixclientheroku.s3-website.ca-central-1.amazonaws.com",
   "http://52.60.65.223",
   "http://52.60.65.223/",
 ]; // allowed domains
