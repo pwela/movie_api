@@ -67,21 +67,23 @@ let alloweddOrigins = [
   "http://52.60.65.223/",
 ]; // allowed domains
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-      if (alloweddOrigins.indexOf(origin) === -1) {
-        // a specified origin isn't found
-        let message =
-          "The CORS policy for this app doesn't allow acess from origin " +
-          origin;
-        return callback(new Error(message), false);
-      }
-      return callback(null, true);
-    },
-  })
-);
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin) return callback(null, true);
+//       if (alloweddOrigins.indexOf(origin) === -1) {
+//         // a specified origin isn't found
+//         let message =
+//           "The CORS policy for this app doesn't allow acess from origin " +
+//           origin;
+//         return callback(new Error(message), false);
+//       }
+//       return callback(null, true);
+//     },
+//   })
+// );
+
+app.use(cors());
 
 // importation of auth.js file
 let auth = require("./auth")(app);
