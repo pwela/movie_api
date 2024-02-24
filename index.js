@@ -52,7 +52,7 @@ let alloweddOrigins = [
   "http://localhost:4200",
   //"https://myprime.netlify.app/",
   // "https://myprime.netlify.app",
-  "*.netlify.app",
+  "*.netlify.app/",
   "https://pwela.github.io/",
   "https://pwela.github.io",
   "http://15.157.60.95/",
