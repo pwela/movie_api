@@ -67,6 +67,7 @@ let alloweddOrigins = [
   "http://52.60.65.223/",
 ]; // allowed domains
 
+// Allow specific domain in cors
 // app.use(
 //   cors({
 //     origin: (origin, callback) => {
@@ -82,6 +83,8 @@ let alloweddOrigins = [
 //     },
 //   })
 // );
+
+//allow all domains
 
 app.use(cors());
 
@@ -534,16 +537,16 @@ app.use((err, req, res, next) => {
 // Listen for requests
 
 //listen online server
-app.listen(port, "0.0.0.0", () => {
-  console.log("I'm listening on port " + port);
-});
+// app.listen(port, "0.0.0.0", () => {
+//   console.log("I'm listening on port " + port);
+// });
 
 // listen to server in EC2
-// app.listen(3000, "localhost", () => {
-//   console.log(
-//     "I'm listening on port 3000 for EC2, please change the port number in the code if you are using heroku"
-//   );
-// });
+app.listen(3000, "localhost", () => {
+  console.log(
+    "I'm listening on port 3000 for EC2, please change the port number in the code if you are using heroku"
+  );
+});
 // Listen local port
 // app.listen(8080, () => {
 //   console.log("Your app is listening on port 8080");
