@@ -50,7 +50,7 @@ let alloweddOrigins = [
   "http://testsite.com",
   "http://localhost:1234",
   "http://localhost:4200",
-  //"https://myprime.netlify.app/",
+  "https://myprime.netlify.app/",
   "https://myprime.netlify.app",
   "https://pwela.github.io/",
   "https://pwela.github.io",
@@ -58,35 +58,37 @@ let alloweddOrigins = [
   "http://15.157.60.95",
   "http://35.182.26.14",
   "http://35.182.26.14/",
-  "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com",
-  "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com/",
-  "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com",
-  "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com/",
-  "http://myflixclientheroku.s3-website.ca-central-1.amazonaws.com",
+  // "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com",
+  // "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com/",
+  // "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com",
+  // "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com/",
+  // "http://myflixclientheroku.s3-website.ca-central-1.amazonaws.com",
+  /\.amazonaws\.com$/,
   "http://52.60.65.223",
   "http://52.60.65.223/",
 ]; // allowed domains
 
 // Allow specific domain in cors
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin) return callback(null, true);
-//       if (alloweddOrigins.indexOf(origin) === -1) {
-//         // a specified origin isn't found
-//         let message =
-//           "The CORS policy for this app doesn't allow acess from origin " +
-//           origin;
-//         return callback(new Error(message), false);
-//       }
-//       return callback(null, true);
-//     },
-//   })
-// );
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (alloweddOrigins.indexOf(origin) === -1) {
+        // a specified origin isn't found
+        let message =
+          "The CORS policy for this app doesn't allow acess from origin " +
+          origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    },
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
+);
 
 //allow all domains
 
-app.use(cors());
+// app.use(cors());
 
 // importation of auth.js file
 let auth = require("./auth")(app);
