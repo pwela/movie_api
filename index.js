@@ -54,20 +54,13 @@ let alloweddOrigins = [
   "https://myprime.netlify.app",
   "https://pwela.github.io/",
   "https://pwela.github.io",
-  "http://15.157.60.95/",
-  "http://15.157.60.95",
-  "http://35.182.26.14",
-  "http://35.182.26.14/",
   "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com",
-  "http://myflixbucket-02182024.s3-website.ca-central-1.amazonaws.com/",
   "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com",
-  "http://load-balancer-task-2-2-1273969783.ca-central-1.elb.amazonaws.com/",
   "http://myflixclientheroku.s3-website.ca-central-1.amazonaws.com",
   /amazonaws\.com$/,
   /.amazonaws\.com$/,
   /\.amazonaws\.com$/,
   /\amazonaws\.com$/,
-
   "http://52.60.65.223",
   "http://52.60.65.223/",
 ]; // allowed domains
@@ -544,16 +537,16 @@ app.use((err, req, res, next) => {
 // Listen for requests
 
 //listen online server
-app.listen(port, "0.0.0.0", () => {
-  console.log("I'm listening on port " + port);
-});
+// app.listen(port, "0.0.0.0", () => {
+//   console.log("I'm listening on port " + port);
+// });
 
 // listen to server in EC2
-// app.listen(3000, "localhost", () => {
-//   console.log(
-//     "I'm listening on port 3000 for EC2, please change the port number in the code if you are using heroku"
-//   );
-// });
+app.listen(3000, "localhost", () => {
+  console.log(
+    "I'm listening on port 3000 for EC2, please change the port number in the code if you are using heroku"
+  );
+});
 // Listen local port
 // app.listen(8080, () => {
 //   console.log("Your app is listening on port 8080");
