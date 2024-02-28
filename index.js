@@ -136,7 +136,7 @@ app.use(
       }
       return callback(null, true);
     },
-    //methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })
 );
 
@@ -616,7 +616,7 @@ app.listen(3000, "localhost", () => {
     "I'm listening on port 3000 for EC2, please change the port number in the code if you are using heroku"
   );
 });
-// Listen local port
+//Listen local port
 // app.listen(8080, () => {
 //   console.log("Your app is listening on port 8080");
 // });
