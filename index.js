@@ -10,8 +10,80 @@ const express = require("express"),
   app = express(),
   morgan = require("morgan"),
   fs = require("fs"), // import built in node modules fs and path
+  fileUpload = require("express-fileupload"),
   path = require("path"),
   port = process.env.PORT || 8080;
+// Cloud computin exercise 2.4
+
+const multer = require("multer");
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
+
+app.post("/upload", upload.single("file"), (req, res) => {
+  const params = {
+    Bucket: "your_bucket_name",
+    Key: process.env.KEY,
+    Body: req.file,
+  };
+
+  s3.upload(params, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Error uploading file");
+    }
+
+    res.send("File uploaded successfully");
+  });
+});
+
+//classes from the AWS SDK: the S3 client, as well as commands to list and put objects
+const {
+  S3Client,
+  ListObjectsV2Command,
+  PutObjectCommand,
+} = require("@aws-sdk/client-s3");
+
+const s3Client = new S3Client({
+  region: "ca-central-1",
+  //endpoint: "http://localhost:4566",
+  //forcePathStyle: true,
+});
+
+const listObjectsParams = {
+  Bucket: "my-cool-local-bucket",
+};
+
+listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
+
+const putObjectsParams = {
+  Bucket: "exercise-2-3-bucket-pn-02212024",
+};
+
+putObjectsCmd = new PutObjectCommand(putObjectsParams);
+
+s3Client.send(listObjectsCmd);
+
+app.get("/image", (req, res) => {
+  // listObjectsParams = {
+  //     Bucket: IMAGES_BUCKET
+  // }
+  s3Client
+    .send(new ListObjectsV2Command(listObjectsParams))
+    .then((listObjectsResponse) => {
+      res.send(listObjectsResponse);
+      console.log(listObjectsResponse);
+    });
+});
+
+app.post("/image", (req, res) => {
+  const file = req.files.file;
+  const fileName = req.files.fileName;
+  const tempPath = `${UPLOAD_TEMP_PATH}/${fileName}`;
+  file.mv(tempPath, (err) => {
+    res.status(500);
+  });
+});
 
 // Connect to remote mongodb Atlas or EC2 Database
 mongoose.connect(process.env.CONNECTION_URI, {
@@ -43,7 +115,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
 const cors = require("cors");
 /**
  *List all the allowed domains
- @var {array}
+ *@var {array}
  */
 let alloweddOrigins = [
   "http://localhost:8080",
@@ -536,16 +608,16 @@ app.use((err, req, res, next) => {
 // Listen for requests
 
 //listen online server
-app.listen(port, "0.0.0.0", () => {
-  console.log("I'm listening on port " + port);
-});
+// app.listen(port, "0.0.0.0", () => {
+//   console.log("I'm listening on port " + port);
+// });
 
 // listen to server in EC2
-// app.listen(3000, "localhost", () => {
-//   console.log(
-//     "I'm listening on port 3000 for EC2, please change the port number in the code if you are using heroku"
-//   );
-// });
+app.listen(3000, "localhost", () => {
+  console.log(
+    "I'm listening on port 3000 for EC2, please change the port number in the code if you are using heroku"
+  );
+});
 // Listen local port
 // app.listen(8080, () => {
 //   console.log("Your app is listening on port 8080");
