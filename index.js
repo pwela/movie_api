@@ -170,7 +170,7 @@ app.get("/image", (req, res) => {
   // listObjectsParams = {
   //     Bucket: IMAGES_BUCKET
   // }
-  console.log("get files in s3");
+  console.log("get files in s3 bucket");
   s3Client
     .send(new ListObjectsV2Command(listObjectsParams))
     .then((listObjectsResponse) => {
