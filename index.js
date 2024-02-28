@@ -23,7 +23,7 @@ const upload = multer({
 app.post("/upload", upload.single("file"), (req, res) => {
   const params = {
     Bucket: "your_bucket_name",
-    Key: process.env.KEY,
+    Key: "bar",
     Body: req.file,
   };
 
@@ -38,46 +38,46 @@ app.post("/upload", upload.single("file"), (req, res) => {
 });
 
 //classes from the AWS SDK: the S3 client, as well as commands to list and put objects
-const {
-  S3Client,
-  ListObjectsV2Command,
-  PutObjectCommand,
-} = require("@aws-sdk/client-s3");
+// const {
+//   S3Client,
+//   ListObjectsV2Command,
+//   PutObjectCommand,
+// } = require("@aws-sdk/client-s3");
 
-const s3Client = new S3Client({
-  region: "ca-central-1",
-  //endpoint: "http://localhost:4566",
-  //forcePathStyle: true,
-});
+// const s3Client = new S3Client({
+//   region: "us-east-1",
+//   endpoint: "http://localhost:4566",
+//   forcePathStyle: true,
+// });
 
-const listObjectsParams = {
-  Bucket: "exercise-2-3-bucket-pn-02212024",
-};
+// const listObjectsParams = {
+//   Bucket: "exercise-2-3-bucket-pn-02212024",
+// };
 
-listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
+// listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
 
-const putObjectsParams = {
-  Bucket: "exercise-2-3-bucket-pn-02212024",
-};
+// const putObjectsParams = {
+//   Bucket: "exercise-2-3-bucket-pn-02212024",
+// };
 
-putObjectsCmd = new PutObjectCommand(putObjectsParams);
+// putObjectsCmd = new PutObjectCommand(putObjectsParams);
 
-s3Client.send(listObjectsCmd);
+// s3Client.send(listObjectsCmd);
 
-app.post("/image", (req, res) => {
-  const file = req.files.file;
-  const fileName = req.files.fileName;
-  const tempPath = `${UPLOAD_TEMP_PATH}/${fileName}`;
-  file.mv(tempPath, (err) => {
-    res.status(500);
-  });
-});
+// app.post("/image", (req, res) => {
+//   const file = req.files.file;
+//   const fileName = req.files.fileName;
+//   const tempPath = `${UPLOAD_TEMP_PATH}/${fileName}`;
+//   file.mv(tempPath, (err) => {
+//     res.status(500);
+//   });
+// });
 
 // Connect to remote mongodb Atlas or EC2 Database
-mongoose.connect(process.env.CONNECTION_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// mongoose.connect(process.env.CONNECTION_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 
 //Connect to EC2 database
 //mongoose.connect('mongodb://99.79.193.39:27017/myPrimeDB', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -163,18 +163,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // read images in S3 bucket
-app.get("/image", (req, res) => {
-  // listObjectsParams = {
-  //     Bucket: IMAGES_BUCKET
-  // }
-  console.log("get files in s3 bucket");
-  s3Client
-    .send(new ListObjectsV2Command(listObjectsParams))
-    .then((listObjectsResponse) => {
-      res.send(listObjectsResponse);
-      console.log(listObjectsResponse);
-    });
-});
+// app.get("/image", (req, res) => {
+//   // listObjectsParams = {
+//   //     Bucket: IMAGES_BUCKET
+//   // }
+//   console.log("get files in s3 bucket");
+//   s3Client
+//     .send(new ListObjectsV2Command(listObjectsParams))
+//     .then((listObjectsResponse) => {
+//       res.send(listObjectsResponse);
+//       console.log(listObjectsResponse);
+//     });
+// });
 /**
  * Return a list of ALL movies to the user
  * URL: /movies
