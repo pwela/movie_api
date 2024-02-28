@@ -138,11 +138,11 @@ let alloweddOrigins = [
 //     },
 //     //methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 //   })
-);
+//);
 
 //allow all domains
 
- app.use(cors());
+app.use(cors());
 
 // importation of auth.js file
 let auth = require("./auth")(app);
