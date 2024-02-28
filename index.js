@@ -13,29 +13,30 @@ const express = require("express"),
   fileUpload = require("express-fileupload"),
   path = require("path"),
   port = process.env.PORT || 8080;
-// Cloud computin exercise 2.4
 
-const multer = require("multer");
-const upload = multer({
-  storage: multer.memoryStorage(),
-});
+// Cloud computing exercise 2.4
 
-app.post("/upload", upload.single("file"), (req, res) => {
-  const params = {
-    Bucket: "your_bucket_name",
-    Key: "bar",
-    Body: req.file,
-  };
+// const multer = require("multer");
+// const upload = multer({
+//   storage: multer.memoryStorage(),
+// });
 
-  s3.upload(params, (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send("Error uploading file");
-    }
+// app.post("/upload", upload.single("file"), (req, res) => {
+//   const params = {
+//     Bucket: "your_bucket_name",
+//     Key: "bar",
+//     Body: req.file,
+//   };
 
-    res.send("File uploaded successfully");
-  });
-});
+//   s3.upload(params, (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).send("Error uploading file");
+//     }
+
+//     res.send("File uploaded successfully");
+//   });
+// });
 
 //classes from the AWS SDK: the S3 client, as well as commands to list and put objects
 // const {
@@ -74,10 +75,10 @@ app.post("/upload", upload.single("file"), (req, res) => {
 // });
 
 // Connect to remote mongodb Atlas or EC2 Database
-// mongoose.connect(process.env.CONNECTION_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 //Connect to EC2 database
 //mongoose.connect('mongodb://99.79.193.39:27017/myPrimeDB', {useNewUrlParser: true, useUnifiedTopology: true});
