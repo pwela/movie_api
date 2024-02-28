@@ -51,7 +51,7 @@ const s3Client = new S3Client({
 });
 
 const listObjectsParams = {
-  Bucket: "my-cool-local-bucket",
+  Bucket: "exercise-2-3-bucket-pn-02212024",
 };
 
 listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
