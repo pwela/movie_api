@@ -123,26 +123,26 @@ let alloweddOrigins = [
 ]; // allowed domains
 
 // Allow specific domain in cors
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin) return callback(null, true);
-//       if (alloweddOrigins.indexOf(origin) === -1) {
-//         // a specified origin isn't found
-//         let message =
-//           "The CORS policy for this app doesn't allow acess from origin " +
-//           origin;
-//         return callback(new Error(message), false);
-//       }
-//       return callback(null, true);
-//     },
-//     //methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   })
-//);
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (alloweddOrigins.indexOf(origin) === -1) {
+        // a specified origin isn't found
+        let message =
+          "The CORS policy for this app doesn't allow acess from origin " +
+          origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    },
+    //methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
+);
 
 //allow all domains
 
-app.use(cors());
+//app.use(cors());
 
 // importation of auth.js file
 let auth = require("./auth")(app);
