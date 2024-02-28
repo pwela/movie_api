@@ -64,18 +64,6 @@ putObjectsCmd = new PutObjectCommand(putObjectsParams);
 
 s3Client.send(listObjectsCmd);
 
-app.get("/image", (req, res) => {
-  // listObjectsParams = {
-  //     Bucket: IMAGES_BUCKET
-  // }
-  s3Client
-    .send(new ListObjectsV2Command(listObjectsParams))
-    .then((listObjectsResponse) => {
-      res.send(listObjectsResponse);
-      console.log(listObjectsResponse);
-    });
-});
-
 app.post("/image", (req, res) => {
   const file = req.files.file;
   const fileName = req.files.fileName;
@@ -177,6 +165,19 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// read images in S3 bucket
+app.get("/image", (req, res) => {
+  // listObjectsParams = {
+  //     Bucket: IMAGES_BUCKET
+  // }
+  console.log("get files in s3");
+  s3Client
+    .send(new ListObjectsV2Command(listObjectsParams))
+    .then((listObjectsResponse) => {
+      res.send(listObjectsResponse);
+      console.log(listObjectsResponse);
+    });
+});
 /**
  * Return a list of ALL movies to the user
  * URL: /movies
