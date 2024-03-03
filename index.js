@@ -21,22 +21,22 @@ const upload = multer({
   storage: multer.memoryStorage(),
 });
 
-app.post("/upload", upload.single("file"), (req, res) => {
-  const params = {
-    Bucket: "your_bucket_name",
-    Key: "bar",
-    Body: req.file,
-  };
+// app.post("/upload", upload.single("file"), (req, res) => {
+//   const params = {
+//     Bucket: "your_bucket_name",
+//     Key: "bar",
+//     Body: req.file,
+//   };
 
-  s3.upload(params, (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send("Error uploading file");
-    }
+//   s3.upload(params, (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).send("Error uploading file");
+//     }
 
-    res.send("File uploaded successfully");
-  });
-});
+//     res.send("File uploaded successfully");
+//   });
+// });
 
 //classes from the AWS SDK: the S3 client, as well as commands to list and put objects
 const {
@@ -63,7 +63,7 @@ const putObjectsParams = {
 
 putObjectsCmd = new PutObjectCommand(putObjectsParams);
 
-s3Client.send(listObjectsCmd);
+//s3Client.send(listObjectsCmd);
 
 app.post("/image", (req, res) => {
   const file = req.files.file;
@@ -164,18 +164,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // read images in S3 bucket
-// app.get("/image", (req, res) => {
-//   // listObjectsParams = {
-//   //     Bucket: IMAGES_BUCKET
-//   // }
-//   console.log("get files in s3 bucket");
-//   s3Client
-//     .send(new ListObjectsV2Command(listObjectsParams))
-//     .then((listObjectsResponse) => {
-//       res.send(listObjectsResponse);
-//       console.log(listObjectsResponse);
-//     });
-// });
+app.get("/image", (req, res) => {
+  // listObjectsParams = {
+  //     Bucket: IMAGES_BUCKET
+  // }
+  console.log("get files in s3 bucket");
+  s3Client
+    .send(new ListObjectsV2Command(listObjectsParams))
+    .then((listObjectsResponse) => {
+      res.send(listObjectsResponse);
+      console.log(listObjectsResponse);
+    });
+});
 /**
  * Return a list of ALL movies to the user
  * URL: /movies
