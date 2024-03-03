@@ -14,89 +14,6 @@ const express = require("express"),
   path = require("path"),
   port = process.env.PORT || 8080;
 
-// Cloud computing exercise 2.4
-
-const multer = require("multer");
-const upload = multer({
-  storage: multer.memoryStorage(),
-});
-
-// app.post("/upload", upload.single("file"), (req, res) => {
-//   const params = {
-//     Bucket: "your_bucket_name",
-//     Key: "bar",
-//     Body: req.file,
-//   };
-
-//   s3.upload(params, (err, data) => {
-//     if (err) {
-//       console.error(err);
-//       return res.status(500).send("Error uploading file");
-//     }
-
-//     res.send("File uploaded successfully");
-//   });
-// });
-
-//classes from the AWS SDK: the S3 client, as well as commands to list and put objects
-const {
-  S3Client,
-  ListObjectsV2Command,
-  PutObjectCommand,
-} = require("@aws-sdk/client-s3");
-
-const s3Client = new S3Client({
-  region: "ca-central-1",
-  //endpoint: "http://localhost:4566",
-  //forcePathStyle: true,
-});
-
-const listObjectsParams = {
-  Bucket: "exercise-2-3-bucket-pn-02212024",
-};
-
-listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
-
-const putObjectsParams = {
-  Bucket: "exercise-2-3-bucket-pn-02212024",
-};
-
-putObjectsCmd = new PutObjectCommand(putObjectsParams);
-
-//s3Client.send(listObjectsCmd);
-
-// read images in S3 bucket
-app.get("/image", (req, res) => {
-  // listObjectsParams = {
-  //     Bucket: IMAGES_BUCKET
-  // }
-  console.log("get files in s3 bucket");
-  s3Client
-    .send(new ListObjectsV2Command(listObjectsParams))
-    .then((listObjectsResponse) => {
-      res.send(listObjectsResponse);
-      console.log(listObjectsResponse);
-    });
-});
-
-// app.post("/image", (req, res) => {
-//   const file = req.files.file;
-//   const fileName = req.files.fileName;
-//   // Upload file in ec2 instance
-//   const tempPath = "/home/ubuntu/"`${fileName}`;
-//   file.mv(tempPath, (err) => {
-//     res.status(500);
-//   });
-
-//   //Upload file in s3 bucket
-//   s3Client
-//     .send(new PutObjectCommand(putObjectsParams))
-//     .then((putObjectResponse) => {
-//       res.send(putObjectResponse);
-//       console.log(putObjectResponse);
-//     });
-// });
-
 // Connect to remote mongodb Atlas or EC2 Database
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
@@ -185,6 +102,87 @@ app.use(express.static("public"));
  */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Cloud computing exercise 2.4
+
+const multer = require("multer");
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
+
+// app.post("/upload", upload.single("file"), (req, res) => {
+//   const params = {
+//     Bucket: "your_bucket_name",
+//     Key: "bar",
+//     Body: req.file,
+//   };
+
+//   s3.upload(params, (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).send("Error uploading file");
+//     }
+
+//     res.send("File uploaded successfully");
+//   });
+// });
+
+//classes from the AWS SDK: the S3 client, as well as commands to list and put objects
+const {
+  S3Client,
+  ListObjectsV2Command,
+  PutObjectCommand,
+} = require("@aws-sdk/client-s3");
+
+const s3Client = new S3Client({
+  region: "ca-central-1",
+  //endpoint: "http://localhost:4566",
+  //forcePathStyle: true,
+});
+
+const listObjectsParams = {
+  Bucket: "exercise-2-3-bucket-pn-02212024",
+};
+
+listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
+
+const putObjectsParams = {
+  Bucket: "exercise-2-3-bucket-pn-02212024",
+};
+
+putObjectsCmd = new PutObjectCommand(putObjectsParams);
+
+//s3Client.send(listObjectsCmd);
+
+// read images in S3 bucket
+app.get("/image", (req, res) => {
+  // listObjectsParams = {
+  //     Bucket: IMAGES_BUCKET
+  // }
+  console.log("get files in s3 bucket");
+  s3Client.send(listObjectsCmd).then((listObjectsResponse) => {
+    res.send(listObjectsResponse);
+    console.log(listObjectsResponse);
+  });
+});
+
+// app.post("/image", (req, res) => {
+//   const file = req.files.file;
+//   const fileName = req.files.fileName;
+//   // Upload file in ec2 instance
+//   const tempPath = "/home/ubuntu/"`${fileName}`;
+//   file.mv(tempPath, (err) => {
+//     res.status(500);
+//   });
+
+//   //Upload file in s3 bucket
+//   s3Client
+//     .send(new PutObjectCommand(putObjectsParams))
+//     .then((putObjectResponse) => {
+//       res.send(putObjectResponse);
+//       console.log(putObjectResponse);
+//     });
+// });
 
 /**
  * Return a list of ALL movies to the user
