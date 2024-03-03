@@ -65,13 +65,36 @@ putObjectsCmd = new PutObjectCommand(putObjectsParams);
 
 //s3Client.send(listObjectsCmd);
 
+// read images in S3 bucket
+app.get("/image", (req, res) => {
+  // listObjectsParams = {
+  //     Bucket: IMAGES_BUCKET
+  // }
+  console.log("get files in s3 bucket");
+  s3Client
+    .send(new ListObjectsV2Command(listObjectsParams))
+    .then((listObjectsResponse) => {
+      res.send(listObjectsResponse);
+      console.log(listObjectsResponse);
+    });
+});
+
 app.post("/image", (req, res) => {
   const file = req.files.file;
   const fileName = req.files.fileName;
-  const tempPath = `${UPLOAD_TEMP_PATH}/${fileName}`;
+  // Upload file in ec2 instance
+  const tempPath = "/home/ubuntu/"`${fileName}`;
   file.mv(tempPath, (err) => {
     res.status(500);
   });
+
+  //Upload file in s3 bucket
+  s3Client
+    .send(new PutObjectCommand(putObjectsParams))
+    .then((putObjectResponse) => {
+      res.send(putObjectResponse);
+      console.log(putObjectResponse);
+    });
 });
 
 // Connect to remote mongodb Atlas or EC2 Database
@@ -163,19 +186,6 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// read images in S3 bucket
-app.get("/image", (req, res) => {
-  // listObjectsParams = {
-  //     Bucket: IMAGES_BUCKET
-  // }
-  console.log("get files in s3 bucket");
-  s3Client
-    .send(new ListObjectsV2Command(listObjectsParams))
-    .then((listObjectsResponse) => {
-      res.send(listObjectsResponse);
-      console.log(listObjectsResponse);
-    });
-});
 /**
  * Return a list of ALL movies to the user
  * URL: /movies
