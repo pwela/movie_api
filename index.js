@@ -46,7 +46,7 @@ const {
 } = require("@aws-sdk/client-s3");
 
 const s3Client = new S3Client({
-  //region: "us-east-1",
+  region: "ca-central-1",
   //endpoint: "http://localhost:4566",
   forcePathStyle: true,
 });
