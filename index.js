@@ -79,23 +79,23 @@ app.get("/image", (req, res) => {
     });
 });
 
-app.post("/image", (req, res) => {
-  const file = req.files.file;
-  const fileName = req.files.fileName;
-  // Upload file in ec2 instance
-  const tempPath = "/home/ubuntu/"`${fileName}`;
-  file.mv(tempPath, (err) => {
-    res.status(500);
-  });
+// app.post("/image", (req, res) => {
+//   const file = req.files.file;
+//   const fileName = req.files.fileName;
+//   // Upload file in ec2 instance
+//   const tempPath = "/home/ubuntu/"`${fileName}`;
+//   file.mv(tempPath, (err) => {
+//     res.status(500);
+//   });
 
-  //Upload file in s3 bucket
-  s3Client
-    .send(new PutObjectCommand(putObjectsParams))
-    .then((putObjectResponse) => {
-      res.send(putObjectResponse);
-      console.log(putObjectResponse);
-    });
-});
+//   //Upload file in s3 bucket
+//   s3Client
+//     .send(new PutObjectCommand(putObjectsParams))
+//     .then((putObjectResponse) => {
+//       res.send(putObjectResponse);
+//       console.log(putObjectResponse);
+//     });
+// });
 
 // Connect to remote mongodb Atlas or EC2 Database
 mongoose.connect(process.env.CONNECTION_URI, {
