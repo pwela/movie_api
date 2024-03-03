@@ -48,7 +48,7 @@ const {
 const s3Client = new S3Client({
   region: "ca-central-1",
   //endpoint: "http://localhost:4566",
-  forcePathStyle: true,
+  //forcePathStyle: true,
 });
 
 const listObjectsParams = {
