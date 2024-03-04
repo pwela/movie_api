@@ -166,8 +166,8 @@ app.post("/image", (req, res) => {
   const file = req.files.image;
   const fileName = req.files.image.name;
   console.log("Upload file in ec2 instance");
-  const tempPath = "/home/ubuntu/"`${fileName}`;
-  console.log("cpoy file in ubuntu repo");
+  const tempPath = "/home/ubuntu/" + fileName;
+  console.log("copy file in ubuntu repo");
   file.mv(tempPath, (err) => {
     res.status(500);
   });
