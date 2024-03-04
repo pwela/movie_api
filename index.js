@@ -161,23 +161,23 @@ app.get("/image", (req, res) => {
   });
 });
 
-app.post("/image.*", (req, res) => {
+app.post("/image", (req, res) => {
+  console.log("Upload file from form");
   const file = req.files.image;
   const fileName = req.files.image.name;
-  // Upload file in ec2 instance
+  console.log("Upload file in ec2 instance");
   const tempPath = "/home/ubuntu/"`${fileName}`;
+  console.log("cpoy file in ubuntu repo");
   file.mv(tempPath, (err) => {
     res.status(500);
   });
-
-  //Upload file in s3 bucket
-
+  // Parameters for S3 upload
   const putObjectsParams = {
     Body: "/home/ubuntu/"`${fileName}`,
     Bucket: "exercise-2-3-bucket-pn-02212024",
     Key: fileName,
   };
-
+  console.log("Upload file in s3 bucket");
   putObjectsCmd = new PutObjectCommand(putObjectsParams);
   s3Client.send(putObjectsCmd).then((putObjectResponse) => {
     res.send(putObjectResponse);
