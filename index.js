@@ -81,6 +81,7 @@ app.use(
   })
 );
 
+app.use(fileUpload());
 //allow all domains
 
 //app.use(cors());
@@ -146,10 +147,6 @@ const listObjectsParams = {
 
 listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
 
-const putObjectsParams = {
-  Bucket: "exercise-2-3-bucket-pn-02212024",
-};
-
 putObjectsCmd = new PutObjectCommand(putObjectsParams);
 
 //s3Client.send(listObjectsCmd);
@@ -166,23 +163,30 @@ app.get("/image", (req, res) => {
   });
 });
 
-// app.post("/image", (req, res) => {
-//   const file = req.files.file;
-//   const fileName = req.files.fileName;
-//   // Upload file in ec2 instance
-//   const tempPath = "/home/ubuntu/"`${fileName}`;
-//   file.mv(tempPath, (err) => {
-//     res.status(500);
-//   });
+app.post("/image", (req, res) => {
+  const file = req.files.image;
+  const fileName = req.files.image.name;
+  // Upload file in ec2 instance
+  const tempPath = "/home/ubuntu/"`${fileName}`;
+  file.mv(tempPath, (err) => {
+    res.status(500);
+  });
 
-//   //Upload file in s3 bucket
-//   s3Client
-//     .send(new PutObjectCommand(putObjectsParams))
-//     .then((putObjectResponse) => {
-//       res.send(putObjectResponse);
-//       console.log(putObjectResponse);
-//     });
-// });
+  //Upload file in s3 bucket
+
+  const putObjectsParams = {
+    Body: "/home/ubuntu/"`${fileName}`,
+    Bucket: "exercise-2-3-bucket-pn-02212024",
+    Key: fileName,
+  };
+
+  s3Client
+    .send(new PutObjectCommand(putObjectsParams))
+    .then((putObjectResponse) => {
+      res.send(putObjectResponse);
+      console.log(putObjectResponse);
+    });
+});
 
 /**
  * Return a list of ALL movies to the user
