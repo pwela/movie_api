@@ -147,8 +147,6 @@ const listObjectsParams = {
 
 listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
 
-putObjectsCmd = new PutObjectCommand(putObjectsParams);
-
 //s3Client.send(listObjectsCmd);
 
 // read images in S3 bucket
@@ -180,12 +178,11 @@ app.post("/image", (req, res) => {
     Key: fileName,
   };
 
-  s3Client
-    .send(new PutObjectCommand(putObjectsParams))
-    .then((putObjectResponse) => {
-      res.send(putObjectResponse);
-      console.log(putObjectResponse);
-    });
+  putObjectsCmd = new PutObjectCommand(putObjectsParams);
+  s3Client.send(putObjectsCmd).then((putObjectResponse) => {
+    res.send(putObjectResponse);
+    console.log(putObjectResponse);
+  });
 });
 
 /**
