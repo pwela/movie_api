@@ -161,7 +161,7 @@ app.get("/image", (req, res) => {
   });
 });
 
-app.post("/image", (req, res) => {
+app.post("/image.*", (req, res) => {
   const file = req.files.image;
   const fileName = req.files.image.name;
   // Upload file in ec2 instance
