@@ -173,7 +173,8 @@ app.post("/image", (req, res) => {
   });
   // Parameters for S3 upload
   const putObjectsParams = {
-    Body: "/home/ubuntu/" + fileName,
+    //Body: "/home/ubuntu/" + fileName,
+    Body: file.data,
     Bucket: "exercise-2-3-bucket-pn-02212024",
     Key: fileName,
   };
