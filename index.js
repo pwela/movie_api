@@ -176,7 +176,7 @@ app.post("/image", (req, res) => {
     //Body: "/home/ubuntu/" + fileName,
     Body: file.data,
     Bucket: "exercise-2-3-bucket-pn-02212024",
-    Key: fileName,
+    Key: file.name,
   };
   console.log("Upload file in s3 bucket");
   putObjectsCmd = new PutObjectCommand(putObjectsParams);
