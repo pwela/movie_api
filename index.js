@@ -167,10 +167,10 @@ app.post("/image", (req, res) => {
   const fileName = req.files.image.name;
   console.log("Upload file in ec2 instance");
   const tempPath = "/home/ubuntu/" + fileName;
-  console.log("copy file in ubuntu repo");
-  file.mv(tempPath, (err) => {
-    res.status(500);
-  });
+  //console.log("copy file in ubuntu repo");
+  // file.mv(tempPath, (err) => {
+  //   res.status(500);
+  // });
   // Parameters for S3 upload
   const putObjectsParams = {
     //Body: "/home/ubuntu/" + fileName,
