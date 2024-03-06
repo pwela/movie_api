@@ -196,14 +196,23 @@ app.get("/image/:imageName", async (req, res) => {
   };
   const getObjectCmd = new GetObjectCommand(getObjectParams);
 
-  try {
-    const signedUrl = await getSignedUrl(s3Client, getObjectCmd);
-    console.log("Succes, the url is", signedUrl);
-    res.status(201).json({ signedUrl });
-  } catch (err) {
-    console.log(err);
-    next(err);
-  }
+  // try {
+  //   const signedUrl = await getSignedUrl(s3Client, getObjectCmd);
+  //   console.log("Succes, the url is", signedUrl);
+  //   res.status(201).json({ signedUrl });
+  // } catch (err) {
+  //   console.log(err);
+  //   next(err);
+  // }
+
+  await getSignedUrl(s3Client, getObjectCmd)
+    .then((signedUrl) => {
+      res.status(201).json({ signedUrl });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Error " + err);
+    });
 
   // s3Client.getSignedUrl("getObject", getObjectParams).then(
   //   function (url) {
