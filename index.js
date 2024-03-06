@@ -133,6 +133,7 @@ const {
   S3Client,
   ListObjectsV2Command,
   PutObjectCommand,
+  GetObjectCommand,
 } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
@@ -187,21 +188,32 @@ app.post("/image", (req, res) => {
   });
 });
 
-app.get("/image/:imageName", (req, res) => {
+app.get("/image/:imageName", async (req, res) => {
   console.log("endpoint for retrieving image in s3 found");
   const getObjectParams = {
     Bucket: "exercise-2-3-bucket-pn-02212024",
     Key: req.params.imageName,
   };
-  s3Client.getSignedUrl("getObject", getObjectParams).then(
-    function (url) {
-      console.log("Sucess: Image url to use in frontend: ", url);
-      res.send(url);
-    },
-    function (err) {
-      console.log(err);
-    }
-  );
+  const getObjectCmd = new GetObjectCommand(getObjectParams);
+
+  try {
+    const signedUrl = await getSignedUrl(s3Client, getObjectCmd);
+    console.log("Succes, the url is", signedUrl);
+    res.json({ signedUrl });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+
+  // s3Client.getSignedUrl("getObject", getObjectParams).then(
+  //   function (url) {
+  //     console.log("Sucess: Image url to use in frontend: ", url);
+  //     res.send(url);
+  //   },
+  //   function (err) {
+  //     console.log(err);
+  //   }
+  // );
 });
 
 /**
