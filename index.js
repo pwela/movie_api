@@ -200,7 +200,6 @@ app.get("/image/:imageName", async (req, res) => {
     const signedUrl = await getSignedUrl(s3Client, getObjectCmd);
     console.log("Succes, the url is", signedUrl);
     res.json({ signedUrl });
-    res.send(signedUrl);
   } catch (err) {
     console.log(err);
     next(err);
