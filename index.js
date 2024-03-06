@@ -199,7 +199,7 @@ app.get("/image/:imageName", async (req, res) => {
   try {
     const signedUrl = await getSignedUrl(s3Client, getObjectCmd);
     console.log("Succes, the url is", signedUrl);
-    res.json({ signedUrl });
+    res.status(201).json({ signedUrl });
   } catch (err) {
     console.log(err);
     next(err);
