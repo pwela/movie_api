@@ -133,7 +133,7 @@ const {
   S3Client,
   ListObjectsV2Command,
   PutObjectCommand,
-  getSignedUrlPromise,
+  getSignedUrl,
 } = require("@aws-sdk/client-s3");
 
 const s3Client = new S3Client({
@@ -193,7 +193,7 @@ app.get("/image/:imageName", (req, res) => {
     Bucket: "exercise-2-3-bucket-pn-02212024",
     Key: req.params.imageName,
   };
-  s3Client.getSignedUrlPromise("getObject", getObjectParams).then(
+  s3Client.getSignedUrl("getObject", getObjectParams).then(
     function (url) {
       console.log("Sucess: Image url to use in frontend: ", url);
       res.send(url);
