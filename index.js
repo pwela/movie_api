@@ -158,8 +158,8 @@ app.get("/image", (req, res) => {
   // }
   console.log("get files in s3 bucket");
   s3Client.send(listObjectsCmd).then((listObjectsResponse) => {
-    res.send(listObjectsResponse);
     console.log(listObjectsResponse);
+    res.status(201).json(listObjectsResponse);
   });
 });
 
@@ -183,8 +183,8 @@ app.post("/image", (req, res) => {
   console.log("Upload file in s3 bucket");
   putObjectsCmd = new PutObjectCommand(putObjectsParams);
   s3Client.send(putObjectsCmd).then((putObjectResponse) => {
-    res.send(putObjectResponse);
     console.log(putObjectResponse);
+    res.send(`File ${file.name} uploaded successfully.`);
   });
 });
 
@@ -196,23 +196,23 @@ app.get("/image/:imageName", async (req, res) => {
   };
   const getObjectCmd = new GetObjectCommand(getObjectParams);
 
-  // try {
-  //   const signedUrl = await getSignedUrl(s3Client, getObjectCmd);
-  //   console.log("Succes, the url is", signedUrl);
-  //   res.status(201).json({ signedUrl });
-  // } catch (err) {
-  //   console.log(err);
-  //   next(err);
-  // }
+  try {
+    const signedUrl = await getSignedUrl(s3Client, getObjectCmd);
+    console.log("Succes, the url is", signedUrl);
+    res.status(201).json({ signedUrl });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
 
-  await getSignedUrl(s3Client, getObjectCmd)
-    .then((signedUrl) => {
-      res.status(201).json({ signedUrl });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send("Error " + err);
-    });
+  // await getSignedUrl(s3Client, getObjectCmd)
+  //   .then((signedUrl) => {
+  //     res.status(201).json({ signedUrl });
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     res.status(500).send("Error " + err);
+  //   });
 
   // s3Client.getSignedUrl("getObject", getObjectParams).then(
   //   function (url) {
