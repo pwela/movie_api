@@ -198,13 +198,13 @@ app.get("/thumbails", (req, res) => {
           item.url = signedUrl;
         }
       }
-      console.log("iems, ", items);
+      //console.log("iems, ", items);
       return items;
     }
     console.log("result ", result);
     process(result).then((res) => {
       console.log(res);
-      res.status(201).json(res);
+      res.status(201).json({ res });
     });
   });
 });
