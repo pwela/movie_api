@@ -184,6 +184,7 @@ app.get("/thumbails", (req, res) => {
     let result = listObjectsResponse.Contents; // Objects array
 
     async function getThumbailsSignedUrl(key) {
+      console.log("fect url for ", key);
       return new Promise((resolve, reject) => {
         let params = { Bucket: "exercise-2-3-bucket-pn-02212024", Key: key };
         const getObjectCmd = new GetObjectCommand(params);
