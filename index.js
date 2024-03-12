@@ -206,7 +206,7 @@ app.get("/thumbails", (req, res) => {
       console.log(res);
       return res;
     });
-    res.status(201).json({ res });
+    res.status(201).json();
   });
 });
 
