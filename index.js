@@ -184,7 +184,7 @@ app.get("/thumbails", (req, res) => {
     let result = listObjectsResponse.Contents; // Objects array
 
     async function getThumbailsSignedUrl(key) {
-      console.log("fect url for ", key);
+      console.log("feth url for ", key);
       return new Promise((resolve, reject) => {
         let params = { Bucket: "exercise-2-3-bucket-pn-02212024", Key: key };
         const getObjectCmd = new GetObjectCommand(params);
@@ -197,8 +197,11 @@ app.get("/thumbails", (req, res) => {
 
     async function process(items) {
       for (let item of items) {
-        const signedUrl = await getThumbailsSignedUrl(item.Key);
-        item.url = signedUrl;
+        if (item.Key === "resized-images/") console.log("No url");
+        else {
+          const signedUrl = await getThumbailsSignedUrl(item.Key);
+          item.url = signedUrl;
+        }
       }
       console.log("iems, ", items);
       return items;
