@@ -182,6 +182,7 @@ app.get("/thumbails", (req, res) => {
   console.log("get files in s3 bucket");
   s3Client.send(listThumbailsCmd).then((listObjectsResponse) => {
     let result = listObjectsResponse.Contents; // Objects array
+
     async function getThumbailsSignedUrl(key) {
       return new Promise((resolve, reject) => {
         let params = { Bucket: "exercise-2-3-bucket-pn-02212024", Key: key };
@@ -198,9 +199,10 @@ app.get("/thumbails", (req, res) => {
         const signedUrl = await getThumbailsSignedUrl(item.Key);
         item.url = signedUrl;
       }
+      console.log("iems, ", items);
       return items;
     }
-
+    console.log("result ", result);
     process(result).then((res) => {
       console.log(res);
       res.status(201).json(res);
