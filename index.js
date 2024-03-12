@@ -185,14 +185,9 @@ app.get("/thumbails", (req, res) => {
 
     async function getThumbailsSignedUrl(key) {
       console.log("feth url for ", key);
-      return new Promise((resolve, reject) => {
-        let params = { Bucket: "exercise-2-3-bucket-pn-02212024", Key: key };
-        const getObjectCmd = new GetObjectCommand(params);
-        getSignedUrl(s3Client, getObjectCmd, (err, url) => {
-          if (err) reject(err);
-          resolve(url);
-        });
-      });
+      let params = { Bucket: "exercise-2-3-bucket-pn-02212024", Key: key };
+      const getObjectCmd = new GetObjectCommand(params);
+      return await getSignedUrl(s3Client, getObjectCmd);
     }
 
     async function process(items) {
