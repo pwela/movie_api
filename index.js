@@ -203,10 +203,11 @@ app.get("/thumbails", (req, res) => {
     }
     console.log("result ", result);
     process(result).then((res) => {
-      // console.log(res);
+      console.log("fecth completed");
       return res;
     });
   });
+  console.log("Json object", test.json);
   res.status(201).json(test);
 });
 
