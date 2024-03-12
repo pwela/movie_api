@@ -180,35 +180,38 @@ app.get("/thumbails", (req, res) => {
   //     Bucket: IMAGES_BUCKET
   // }
   console.log("get files in s3 bucket");
-  const test = s3Client.send(listThumbailsCmd).then((listObjectsResponse) => {
-    let result = listObjectsResponse.Contents; // Objects array
+  const test = s3Client
+    .send(listThumbailsCmd)
+    .then((listObjectsResponse) => {
+      let result = listObjectsResponse.Contents; // Objects array
 
-    async function getThumbailsSignedUrl(key) {
-      console.log("feth url for ", key);
-      let params = { Bucket: "exercise-2-3-bucket-pn-02212024", Key: key };
-      const getObjectCmd = new GetObjectCommand(params);
-      return await getSignedUrl(s3Client, getObjectCmd);
-    }
-
-    async function process(items) {
-      for (let item of items) {
-        if (item.Key === "resized-images/") console.log("No url");
-        else {
-          const signedUrl = await getThumbailsSignedUrl(item.Key);
-          item.url = signedUrl;
-        }
+      async function getThumbailsSignedUrl(key) {
+        console.log("feth url for ", key);
+        let params = { Bucket: "exercise-2-3-bucket-pn-02212024", Key: key };
+        const getObjectCmd = new GetObjectCommand(params);
+        return await getSignedUrl(s3Client, getObjectCmd);
       }
-      //console.log("iems, ", items);
-      return items;
-    }
-    console.log("result ", result);
-    process(result).then((res) => {
-      console.log("fecth completed");
-      return res;
-    });
-  });
-  console.log("Json object", test.json);
-  res.status(201).json(test);
+
+      async function process(items) {
+        for (let item of items) {
+          if (item.Key === "resized-images/") console.log("No url");
+          else {
+            const signedUrl = await getThumbailsSignedUrl(item.Key);
+            item.url = signedUrl;
+          }
+        }
+        //console.log("iems, ", items);
+        return items;
+      }
+      console.log("result ", result);
+      // process(result).then((res) => {
+      //   console.log("fecth completed");
+      //   return res;
+      // });
+      console.log(process(result));
+      return process(result);
+    })
+    .then((img) => res.status(201).json(img));
 });
 
 //Upload image
