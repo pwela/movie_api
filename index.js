@@ -143,8 +143,12 @@ const s3Client = new S3Client({
   //forcePathStyle: true,
 });
 
+const originalImagePrefix = "original-images/";
+const resizedImagePrefix = "resized-images/";
+
 const listObjectsParams = {
   Bucket: "exercise-2-3-bucket-pn-02212024",
+  Prefix: originalImagePrefix,
 };
 
 listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
@@ -163,6 +167,8 @@ app.get("/image", (req, res) => {
   });
 });
 
+//Upload image
+
 app.post("/image", (req, res) => {
   console.log("Upload file from form");
   const file = req.files.image;
@@ -178,7 +184,7 @@ app.post("/image", (req, res) => {
     //Body: "/home/ubuntu/" + fileName,
     Body: file.data,
     Bucket: "exercise-2-3-bucket-pn-02212024",
-    Key: file.name,
+    Key: `${originalImagePrefix}${file.name}`,
   };
   console.log("Upload file in s3 bucket");
   putObjectsCmd = new PutObjectCommand(putObjectsParams);
@@ -188,11 +194,12 @@ app.post("/image", (req, res) => {
   });
 });
 
-app.get("/image/:imageName", async (req, res) => {
+// retrieve and display one original image
+app.get("/image/original/:imageName", async (req, res) => {
   console.log("endpoint for retrieving image in s3 found");
   const getObjectParams = {
     Bucket: "exercise-2-3-bucket-pn-02212024",
-    Key: req.params.imageName,
+    Key: `${originalImagePrefix}${req.params.imageName}`,
   };
   const getObjectCmd = new GetObjectCommand(getObjectParams);
 
@@ -204,25 +211,25 @@ app.get("/image/:imageName", async (req, res) => {
     console.log(err);
     next(err);
   }
+});
 
-  // await getSignedUrl(s3Client, getObjectCmd)
-  //   .then((signedUrl) => {
-  //     res.status(201).json({ signedUrl });
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //     res.status(500).send("Error " + err);
-  //   });
+// retrieve and display one resized image
+app.get("/image/resized/:imageName", async (req, res) => {
+  console.log("endpoint for retrieving image in s3 found");
+  const getObjectParams = {
+    Bucket: "exercise-2-3-bucket-pn-02212024",
+    Key: `${resizedImagePrefix}${req.params.imageName}`,
+  };
+  const getObjectCmd = new GetObjectCommand(getObjectParams);
 
-  // s3Client.getSignedUrl("getObject", getObjectParams).then(
-  //   function (url) {
-  //     console.log("Sucess: Image url to use in frontend: ", url);
-  //     res.send(url);
-  //   },
-  //   function (err) {
-  //     console.log(err);
-  //   }
-  // );
+  try {
+    const signedUrl = await getSignedUrl(s3Client, getObjectCmd);
+    console.log("Succes, the url is", signedUrl);
+    res.status(201).json({ signedUrl });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
 });
 
 /**
