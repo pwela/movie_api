@@ -153,6 +153,13 @@ const listObjectsParams = {
 
 listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
 
+const listThumbailsParams = {
+  Bucket: "exercise-2-3-bucket-pn-02212024",
+  Prefix: resizedImagePrefix,
+};
+
+listThumbailsCmd = new ListObjectsV2Command(listThumbailsParams);
+
 //s3Client.send(listObjectsCmd);
 
 // read images in S3 bucket
@@ -162,6 +169,18 @@ app.get("/image", (req, res) => {
   // }
   console.log("get files in s3 bucket");
   s3Client.send(listObjectsCmd).then((listObjectsResponse) => {
+    console.log(listObjectsResponse);
+    res.status(201).json(listObjectsResponse);
+  });
+});
+
+// read thumbails in S3 bucket
+app.get("/thumbails", (req, res) => {
+  // listObjectsParams = {
+  //     Bucket: IMAGES_BUCKET
+  // }
+  console.log("get files in s3 bucket");
+  s3Client.send(listThumbailsParams).then((listObjectsResponse) => {
     console.log(listObjectsResponse);
     res.status(201).json(listObjectsResponse);
   });
