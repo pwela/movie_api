@@ -180,7 +180,7 @@ app.get("/thumbails", (req, res) => {
   //     Bucket: IMAGES_BUCKET
   // }
   console.log("get files in s3 bucket");
-  s3Client.send(listThumbailsParams).then((listObjectsResponse) => {
+  s3Client.send(listThumbailsCmd).then((listObjectsResponse) => {
     console.log(listObjectsResponse);
     res.status(201).json(listObjectsResponse);
   });
