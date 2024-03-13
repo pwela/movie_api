@@ -203,6 +203,7 @@ app.get("/thumbails", (req, res) => {
     }
     console.log("result ", result);
     process(result).then((urlThunmbails) => {
+      console.log(urlThunmbails);
       res.status(201).json(urlThunmbails);
     });
   });
