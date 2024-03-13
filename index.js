@@ -202,8 +202,8 @@ app.get("/thumbails", (req, res) => {
       return items;
     }
     console.log("result ", result);
-    process(result).then((res) => {
-      console.log(res);
+    process(result).then((urlThunmbails) => {
+      res.status(201).json(urlThunmbails);
     });
   });
   // res.status(201).json(test);
