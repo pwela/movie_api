@@ -104,31 +104,8 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Cloud computing exercise 2.4
+// Cloud computing section
 
-const multer = require("multer");
-const upload = multer({
-  storage: multer.memoryStorage(),
-});
-
-// app.post("/upload", upload.single("file"), (req, res) => {
-//   const params = {
-//     Bucket: "your_bucket_name",
-//     Key: "bar",
-//     Body: req.file,
-//   };
-
-//   s3.upload(params, (err, data) => {
-//     if (err) {
-//       console.error(err);
-//       return res.status(500).send("Error uploading file");
-//     }
-
-//     res.send("File uploaded successfully");
-//   });
-// });
-
-//classes from the AWS SDK: the S3 client, as well as commands to list and put objects
 const {
   S3Client,
   ListObjectsV2Command,
@@ -143,9 +120,11 @@ const s3Client = new S3Client({
   //forcePathStyle: true,
 });
 
+// Prefix for ulpolad and download repo
 const originalImagePrefix = "original-images/";
 const resizedImagePrefix = "resized-images/";
 
+// List objt params
 const listObjectsParams = {
   Bucket: "exercise-2-3-bucket-pn-02212024",
   Prefix: originalImagePrefix,
@@ -153,14 +132,13 @@ const listObjectsParams = {
 
 listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
 
+// List thumbails params
 const listThumbailsParams = {
   Bucket: "exercise-2-3-bucket-pn-02212024",
   Prefix: resizedImagePrefix,
 };
 
 listThumbailsCmd = new ListObjectsV2Command(listThumbailsParams);
-
-//s3Client.send(listObjectsCmd);
 
 // read images in S3 bucket
 app.get("/image", (req, res) => {
@@ -174,11 +152,8 @@ app.get("/image", (req, res) => {
   });
 });
 
-// read thumbails in S3 bucket
+// read thumbails in S3 bucket and return all signed urls
 app.get("/thumbails", (req, res) => {
-  // listObjectsParams = {
-  //     Bucket: IMAGES_BUCKET
-  // }
   console.log("get files in s3 bucket");
   s3Client.send(listThumbailsCmd).then((listObjectsResponse) => {
     let result = listObjectsResponse.Contents; // Objects array
@@ -198,7 +173,7 @@ app.get("/thumbails", (req, res) => {
           item.url = signedUrl;
         }
       }
-      //console.log("iems, ", items);
+
       return items;
     }
     console.log("result ", result);
@@ -207,10 +182,9 @@ app.get("/thumbails", (req, res) => {
       res.status(201).json(urlThunmbails);
     });
   });
-  // res.status(201).json(test);
 });
 
-//Upload image
+//Upload image in s3
 
 app.post("/image", (req, res) => {
   console.log("Upload file from form");
@@ -218,11 +192,7 @@ app.post("/image", (req, res) => {
   const fileName = req.files.image.name;
   console.log("Upload file in ec2 instance");
   const tempPath = "/home/ubuntu/" + fileName;
-  //console.log("copy file in ubuntu repo");
-  // file.mv(tempPath, (err) => {
-  //   res.status(500);
-  // });
-  // Parameters for S3 upload
+
   const putObjectsParams = {
     //Body: "/home/ubuntu/" + fileName,
     Body: file.data,
@@ -256,7 +226,7 @@ app.get("/image/original/:imageName", async (req, res) => {
   }
 });
 
-// retrieve and display one resized image
+// retrieve and display one thumbail image
 app.get("/image/resized/:imageName", async (req, res) => {
   console.log("endpoint for retrieving image in s3 found");
   const getObjectParams = {
@@ -274,6 +244,8 @@ app.get("/image/resized/:imageName", async (req, res) => {
     next(err);
   }
 });
+
+//  End of cloud couputing part
 
 /**
  * Return a list of ALL movies to the user
